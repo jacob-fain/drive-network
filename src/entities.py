@@ -87,7 +87,7 @@ class Network:
             raise ValueError(f"Partner '{name}' already exists")
 
         partner = Partner(name)    
-        self.partners[name]
+        self.partners[name] = partner
 
     def add_company(self, name: str) -> None:
         """Add a company to the network.
