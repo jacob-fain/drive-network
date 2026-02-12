@@ -86,7 +86,7 @@ class Network:
         if name in self.partners:
             raise ValueError(f"Partner '{name}' already exists")
 
-        partner = Partner(name)    
+        partner = Partner(name)
         self.partners[name] = partner
 
     def add_company(self, name: str) -> None:
