@@ -1,0 +1,28 @@
+Partner Alice
+Partner Bob
+Partner Charlie
+Partner Diana
+Company Acme
+Company Globex
+Company Initech
+Company Hooli
+Employee Dave Acme
+Employee Eve Acme
+Employee Frank Globex
+Employee Grace Globex
+Employee Henry Initech
+Employee Ivy Initech
+Employee Jack Initech
+Contact Dave Alice email
+Contact Dave Alice call
+Contact Dave Alice coffee
+Contact Eve Alice email
+Contact Dave Bob call
+Contact Frank Charlie email
+Contact Frank Charlie call
+Contact Grace Charlie coffee
+Contact Grace Bob email
+Contact Henry Diana email
+Contact Ivy Diana call
+Contact Jack Diana coffee
+Contact Jack Diana email
