@@ -1,0 +1,12 @@
+Partner Alice
+Partner Bob
+Company Acme
+Company Globex
+Employee Dave Acme
+Employee Eve Acme
+Employee Frank Globex
+Contact Dave Alice email
+Contact Dave Alice call
+Contact Eve Alice coffee
+Contact Dave Bob email
+Contact Frank Bob call
