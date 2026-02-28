@@ -258,3 +258,66 @@ class TestEndToEnd:
         assert lines[0].startswith("Apple:")
         assert lines[1].startswith("Mango:")
         assert lines[2].startswith("Zebra:")
+
+
+class TestVerboseIntegration:
+    """Integration tests for --verbose flag."""
+
+    def test_verbose_workflow(self):
+        """Test complete verbose workflow: parse commands, analyze, verify output."""
+        from src.analyzer import analyze_network
+
+        network = Network()
+        commands = [
+            "Partner Alice",
+            "Partner Bob",
+            "Company Acme",
+            "Company Globex",
+            "Employee Dave Acme",
+            "Employee Eve Acme",
+            "Employee Frank Globex",
+            "Contact Dave Alice email",
+            "Contact Dave Alice call",
+            "Contact Eve Alice coffee",
+            "Contact Frank Bob call",
+        ]
+        for command in commands:
+            parse_command(command, network)
+
+        result = analyze_network(network, verbose=True)
+        lines = result.split("\n")
+        assert lines[0] == "Acme: Alice (3)"
+        assert lines[1] == "  - Dave: call (1), email (1)"
+        assert lines[2] == "  - Eve: coffee (1)"
+        assert lines[3] == "Globex: Bob (1)"
+        assert lines[4] == "  - Frank: call (1)"
+
+    def test_verbose_flag_from_argv(self, monkeypatch, capsys):
+        """Test --verbose flag parsed from sys.argv."""
+        monkeypatch.setattr("sys.argv", ["network_analyzer.py", "--verbose", "examples/basic.txt"])
+        main()
+        output = capsys.readouterr().out
+        assert "  - " in output
+
+    def test_verbose_with_stdin(self, monkeypatch, capsys):
+        """Test --verbose with stdin input."""
+        fake_input = StringIO(
+            "Partner Alice\n"
+            "Company Acme\n"
+            "Employee Bob Acme\n"
+            "Contact Bob Alice email\n"
+        )
+        monkeypatch.setattr("sys.stdin", fake_input)
+        monkeypatch.setattr("sys.argv", ["network_analyzer.py", "--verbose"])
+        main()
+        output = capsys.readouterr().out
+        lines = output.strip().split("\n")
+        assert lines[0] == "Acme: Alice (1)"
+        assert lines[1] == "  - Bob: email (1)"
+
+    def test_verbose_flag_position_independent(self, monkeypatch, capsys):
+        """Test --verbose works after filename too."""
+        monkeypatch.setattr("sys.argv", ["network_analyzer.py", "examples/basic.txt", "--verbose"])
+        main()
+        output = capsys.readouterr().out
+        assert "  - " in output
