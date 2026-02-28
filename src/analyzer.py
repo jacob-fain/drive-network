@@ -2,7 +2,7 @@
 from src.entities import Network
 
 
-def analyze_network(network: Network) -> str:
+def analyze_network(network: Network, verbose: bool = False) -> str:
     """
     Analyze partner-company relationships and return formatted output.
 
@@ -11,6 +11,7 @@ def analyze_network(network: Network) -> str:
 
     Args:
         network: Network instance containing all entities and contacts
+        verbose: If True, include per-employee contact type breakdowns
 
     Returns:
         str: Formatted output showing strongest relationships, one company per line,
@@ -59,6 +60,22 @@ def analyze_network(network: Network) -> str:
             best_partner = best_partners[0]
 
             results.append(f"{company_name}: {best_partner} ({max_count})")
+
+            if verbose:
+                # Collect employee/contact-type details for the winning partner
+                employee_details = {}
+                for contact in network.get_contacts():
+                    emp = network.employees[contact.employee_name]
+                    if emp.company_name == company_name and contact.partner_name == best_partner:
+                        if contact.employee_name not in employee_details:
+                            employee_details[contact.employee_name] = {}
+                        types = employee_details[contact.employee_name]
+                        types[contact.contact_type] = types.get(contact.contact_type, 0) + 1
+
+                for emp_name in sorted(employee_details.keys()):
+                    type_counts = employee_details[emp_name]
+                    type_parts = [f"{ct} ({type_counts[ct]})" for ct in sorted(type_counts.keys())]
+                    results.append(f"  - {emp_name}: {', '.join(type_parts)}")
         else:
             # Company has no contacts
             results.append(f"{company_name}: No current relationship")
