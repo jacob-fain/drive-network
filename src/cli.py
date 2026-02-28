@@ -69,11 +69,12 @@ def read_input(source) -> list[str]:
 def main() -> None:
     """Entry point for the CLI."""
     
-    # Determine input source
-    if len(sys.argv) > 1:
-        input_source = sys.argv[1]
-    else:
-        input_source = None
+    # Parse flags and determine input source
+    args = sys.argv[1:]
+    verbose = "--verbose" in args
+    if verbose:
+        args.remove("--verbose")
+    input_source = args[0] if args else None
 
     # Read input
     lines = read_input(input_source)
@@ -84,7 +85,7 @@ def main() -> None:
         parse_command(line, network)
 
     # Analyze and print results
-    result = analyze_network(network)
+    result = analyze_network(network, verbose=verbose)
     print(result)
 
 
