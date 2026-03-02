@@ -129,9 +129,9 @@ class Network:
         if partner_name not in self.partners:
             raise ValueError(f"Partner '{partner_name}' does not exist")
 
-        valid_types = {'email', 'call', 'coffee'}
+        valid_types = {'email', 'call', 'coffee', 'pitch'}
         if contact_type.lower() not in valid_types:
-            raise ValueError(f"Invalid contact type '{contact_type}'. Must be email, call, or coffee")
+            raise ValueError(f"Invalid contact type '{contact_type}'. Must be email, call, coffee, or pitch")
 
         contact = Contact(employee_name, partner_name, contact_type.lower())
         self.contacts.append(contact)
