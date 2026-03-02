@@ -41,6 +41,10 @@ def parse_command(line: str, network: Network) -> None:
         network.add_employee(name, company_name)
 
     elif command == "Contact":
+
+        if len(parts) != 4:
+            raise ValueError("Invalid number of arguments")
+
         employee_name = parts[1]
         partner_name = parts[2]
         contact_type = parts[3]

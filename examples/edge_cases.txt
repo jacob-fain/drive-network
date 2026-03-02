@@ -6,7 +6,7 @@ Company NoContactsCompany
 Company SingleContact
 Employee Bob TiedCompany
 Employee Charlie SingleContact
-Contact Bob Zara email
+Contact Zara email
 Contact Bob Alice call
 Contact Bob Mike coffee
 Contact Charlie Alice email

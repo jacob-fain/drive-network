@@ -153,6 +153,17 @@ class TestNetwork:
         with pytest.raises(ValueError, match="Partner 'Alice' does not exist"):
             network.add_contact("Bob", "Alice", "email")
 
+    def test_add_contact_pitch_type(self):
+        """Test adding a contact with pitch type."""
+        network = Network()
+        network.add_partner("Alice")
+        network.add_company("Acme")
+        network.add_employee("Bob", "Acme")
+        network.add_contact("Bob", "Alice", "pitch")
+
+        assert len(network.contacts) == 1
+        assert network.contacts[0].contact_type == "pitch"
+
     def test_add_contact_invalid_type(self):
         """Test that invalid contact type raises error."""
         network = Network()
